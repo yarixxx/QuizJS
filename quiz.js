@@ -18,25 +18,10 @@ function Quiz(id) {
     }
   }
 
-  function rightAnswer() {
+  function answer(label) {
     var p = document.createElement("p");
-    p.textContent = quiz.rightAnswer;
+    p.textContent = label;
     root.appendChild(p);
-
-    var b = document.createElement("button");
-    b.textContent = quiz.continueButton;
-    b.addEventListener("click", function() {
-      cleanQuestion();
-      nextQuestion();
-    });
-    root.appendChild(b);
-  }
-
-  function wrongAnswer() {
-    var p = document.createElement("p");
-    p.textContent = quiz.wrongAnswer;
-    root.appendChild(p);
-
 
     var b = document.createElement("button");
     b.textContent = quiz.continueButton;
@@ -95,9 +80,9 @@ function Quiz(id) {
 
       if (a.value) {
         rate += a.value;          
-        rightAnswer();
+        answer(quiz.rightAnswer);
       } else {
-        wrongAnswer();
+        answer(quiz.wrongAnswer);
       }
     });
 
