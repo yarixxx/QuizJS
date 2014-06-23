@@ -18,13 +18,17 @@ function Quiz(id) {
     }
   }
 
+  function createElement(element, label) {
+    var element = document.createElement(element);
+    element.textContent = label;
+    return element;
+  }
+
   function answer(label) {
-    var p = document.createElement("p");
-    p.textContent = label;
+    var p = createElement("p", label);
     root.appendChild(p);
 
-    var b = document.createElement("button");
-    b.textContent = quiz.continueButton;
+    var b = createElement("button", quiz.continueButton);
     b.addEventListener("click", function() {
       cleanQuestion();
       nextQuestion();
@@ -42,11 +46,8 @@ function Quiz(id) {
   }
 
   function renderResults(text) {
-    var p = document.createElement("p");
+    var p = createElement("p", text + rate + " из " + countTotalPossible());
     p.setAttribute("style", "text-align:center");
-    var result =  text + rate + " из " + countTotalPossible();
-    p.textContent = result;
-    p.innerText = result;
     root.appendChild(p);
   }
 
@@ -55,9 +56,7 @@ function Quiz(id) {
   }
 
   function renderQuestion(q) {
-    var p = document.createElement("p");
-    p.innerText = q;
-    p.textContent = q;
+    var p = createElement("p", q);
     root.appendChild(p);
   }
 
@@ -70,9 +69,7 @@ function Quiz(id) {
   }
 
   function renderOneAnswer(a) {
-    var b = document.createElement("button");
-    b.innerText = a.button;
-    b.textContent = a.button;
+    var b = createElement("button", a.button);
     b.addEventListener("click", function() {
       currentQuestion++;
       
