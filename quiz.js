@@ -26,9 +26,14 @@ function Quiz(id) {
     return element;
   }
 
-  function answer(label) {
-    var p = createElement("p", label);
-    root.appendChild(p);
+  function answer(label, selectedAnswer, markClass) {
+    var answer = createElement("p", selectedAnswer);
+    answer.setAttribute("class", "answer");
+    root.appendChild(answer);
+
+    var mark = createElement("p", label);
+    mark.setAttribute("class", "mark " + markClass);
+    root.appendChild(mark);
 
     var b = createElement("a", quiz.continueButton);
     b.setAttribute("href", "#");
@@ -100,9 +105,9 @@ function Quiz(id) {
 
       if (a.value) {
         rate += a.value;          
-        answer(quiz.rightAnswer);
+        answer(quiz.rightAnswer, a.text, "green");
       } else {
-        answer(quiz.wrongAnswer);
+        answer(quiz.wrongAnswer, a.text, "red");
       }
     });
 
