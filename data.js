@@ -1,8 +1,10 @@
 var quiz = {
+  shuffleAnswers: true,
   startButton: "Проверить знания",
   rightAnswer: "Правильно",
   wrongAnswer: "Неправильно",
   continueButton: "Продолжить",
+  tryAgainButton: "Попробовать снова",
   questions: [
     {
       q: "Опора на жизненный опыт и здравый смысл характерны для:",

@@ -7,12 +7,14 @@ document.addEventListener("DOMContentLoaded", function() {
 function Quiz(id) {
   var root = document.getElementById(id);
   var currentQuestion = 0;
-  var rate = 0;
+  var rate = 0;  
 
   startQuiz();
 
   function startQuiz() {
-    if (quiz) {      
+    if (quiz) {
+      currentQuestion = 0;
+      rate = 0;
       cleanQuestion();
       nextQuestion();
     }
@@ -28,7 +30,8 @@ function Quiz(id) {
     var p = createElement("p", label);
     root.appendChild(p);
 
-    var b = createElement("button", quiz.continueButton);
+    var b = createElement("a", quiz.continueButton);
+    b.setAttribute("href", "#");
     b.addEventListener("click", function() {
       cleanQuestion();
       nextQuestion();
@@ -42,13 +45,20 @@ function Quiz(id) {
       renderAnswers(quiz.questions[currentQuestion].a);
     } else {
       renderResults(quiz.resultText);
+      renderTryAgain();
     }
   }
 
   function renderResults(text) {
     var p = createElement("p", text + rate + " из " + countTotalPossible());
-    p.setAttribute("style", "text-align:center");
     root.appendChild(p);
+  }
+
+  function renderTryAgain() {
+    var b = createElement("a", quiz.tryAgainButton);
+    b.setAttribute("href", "#");
+    b.addEventListener("click", startQuiz);
+    root.appendChild(b);
   }
 
   function countTotalPossible() {
@@ -62,14 +72,27 @@ function Quiz(id) {
 
   function renderAnswers(a) {
     var ul = document.createElement("ul");
+    if (quiz.shuffleAnswers) {
+      shuffle(a);
+    }
     a.forEach(function(item) {
       ul.appendChild(renderOneAnswer(item));
     });
     root.appendChild(ul);
   }
 
+  function shuffle(array) {
+    for (var i = 0; i < array.length; i++) {
+      var randomIndex = Math.floor(Math.random() * i);
+      var randomValue = array[randomIndex];
+      array[randomIndex] = array[i];
+      array[i] = randomValue;
+    }
+  }
+
   function renderOneAnswer(a) {
-    var b = createElement("button", a.button);
+    var b = createElement("a", a.text);
+    b.setAttribute("href", "#");
     b.addEventListener("click", function() {
       currentQuestion++;
       
@@ -85,7 +108,6 @@ function Quiz(id) {
 
     var li = document.createElement("li");
     li.appendChild(b);
-    li.appendChild(document.createTextNode(a.text));
     return li;
   }
 
